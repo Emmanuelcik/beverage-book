@@ -11,7 +11,7 @@ const Header = () => {
   const isHome = useMemo(() => pathname === "/", [pathname]);
 
   const fetchCategories = useAppStore((state) => state.fetchCategories);
-  const searchRecipies = useAppStore((state) => state.searchRecipies);
+  const searchRecipes = useAppStore((state) => state.searchRecipes);
   const categories = useAppStore((state) => state.categories);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Header = () => {
       return;
     }
 
-    searchRecipies(searchFilters);
+    searchRecipes(searchFilters);
   };
   return (
     <header

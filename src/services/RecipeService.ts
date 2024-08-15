@@ -17,7 +17,7 @@ export async function getCategories() {
   }
 }
 
-export async function getRecipies(filters: SearchFilter) {
+export async function getRecipes(filters: SearchFilter) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filters.category}&i=${filters.ingredient}`;
 
   const { data } = await axios(url);
@@ -28,13 +28,12 @@ export async function getRecipies(filters: SearchFilter) {
   }
 }
 
-export async function getRecipieDetails(id: Drink["idDrink"]) {
+export async function getRecipeDetails(id: Drink["idDrink"]) {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const { data } = await axios(url);
 
   const result = RecipeAPIResponseSchema.safeParse(data.drinks[0]);
   if (result.success) {
-    console.log(result.data);
     return result.data;
   }
 }

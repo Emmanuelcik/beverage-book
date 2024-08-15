@@ -1,19 +1,21 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useAppStore } from "../stores/useAppStore";
-import { RecipieDetails } from "../types";
+import { RecipeDetails } from "../types";
 
 export default function Modal() {
   const modal = useAppStore((state) => state.modal);
+  const selectedRecipe = useAppStore((state) => state.selectedRecipe);
   const closeModal = useAppStore((state) => state.closeModal);
-  const selectedRecipie = useAppStore((state) => state.selectedRecipie);
+  const handleFavorites = useAppStore((state) => state.handleFavorites);
+  const favoriteExists = useAppStore((state) => state.favoriteExists);
 
   const renderIngredients = () => {
     const ingredientes: JSX.Element[] = [];
     for (let i = 1; i <= 6; i++) {
       const ingredient =
-        selectedRecipie[`strIngredient${i}` as keyof RecipieDetails];
-      const measure = selectedRecipie[`strMeasure${i}` as keyof RecipieDetails];
+        selectedRecipe[`strIngredient${i}` as keyof RecipeDetails];
+      const measure = selectedRecipe[`strMeasure${i}` as keyof RecipeDetails];
 
       if (ingredient && measure) {
         ingredientes.push(
@@ -57,12 +59,12 @@ export default function Modal() {
                     as="h3"
                     className="text-gray-900 text-4xl font-extrabold my-5 text-center"
                   >
-                    {selectedRecipie.strDrink}
+                    {selectedRecipe.strDrink}
                   </Dialog.Title>
 
                   <img
-                    src={selectedRecipie.strDrinkThumb}
-                    alt={`Image of ${selectedRecipie.strDrink}`}
+                    src={selectedRecipe.strDrinkThumb}
+                    alt={`Image of ${selectedRecipe.strDrink}`}
                     className="mx-auto w-96 "
                   />
                   <Dialog.Title
@@ -78,7 +80,7 @@ export default function Modal() {
                   >
                     Instructions
                   </Dialog.Title>
-                  <p className="text-lg">{selectedRecipie.strInstructions}</p>
+                  <p className="text-lg">{selectedRecipe.strInstructions}</p>
 
                   <div className="mt-5 flex justify-between gap-4">
                     <button
@@ -87,8 +89,16 @@ export default function Modal() {
                     >
                       Close
                     </button>
-                    <button className="w-full rounded bg-orange-600 p-3 font-bold uppercase text-white shadow hover:bg-orange-500">
-                      Add To Favorites
+                    <button
+                      className="w-full rounded bg-orange-600 p-3 font-bold uppercase text-white shadow hover:bg-orange-500"
+                      onClick={() => {
+                        handleFavorites(selectedRecipe);
+                        closeModal();
+                      }}
+                    >
+                      {favoriteExists(selectedRecipe.idDrink)
+                        ? "Remove From Favorites"
+                        : "Add To Favorites"}
                     </button>
                   </div>
                 </Dialog.Panel>

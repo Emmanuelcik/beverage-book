@@ -5,7 +5,7 @@ type DrinkCardProps = {
   drink: Drink;
 };
 const DrinkCard = ({ drink }: DrinkCardProps) => {
-  const selectRecipie = useAppStore((state) => state.selectRecipe);
+  const selectRecipe = useAppStore((state) => state.selectRecipe);
   return (
     <div className="border  shadow-lg">
       <div className="overflow-hidden">
@@ -19,9 +19,9 @@ const DrinkCard = ({ drink }: DrinkCardProps) => {
         <h2 className="text-2xl truncate font-black">{drink.strDrink}</h2>
         <button
           className="bg-orange-400 hover:bg-orange-500 mt-5 w-full p-3 font-bold text-white text-lg"
-          onClick={() => selectRecipie(drink.idDrink)}
+          onClick={() => selectRecipe(drink.idDrink)}
         >
-          Show Recipie
+          Show Recipe
         </button>
       </div>
     </div>
