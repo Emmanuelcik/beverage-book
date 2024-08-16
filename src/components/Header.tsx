@@ -12,6 +12,7 @@ const Header = () => {
 
   const fetchCategories = useAppStore((state) => state.fetchCategories);
   const searchRecipes = useAppStore((state) => state.searchRecipes);
+  const showNotification = useAppStore((state) => state.showNotification);
   const categories = useAppStore((state) => state.categories);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const Header = () => {
     e.preventDefault();
 
     if (Object.values(searchFilters).includes("")) {
-      console.log("All search filters are required");
+      showNotification({ text: "Please select all fields.", error: true });
       return;
     }
 
