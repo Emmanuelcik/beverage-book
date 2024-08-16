@@ -1,7 +1,9 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import FavoritesPage from "./pages/FavoritesPage";
 import Layout from "./layouts/Layout";
+
+const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 
 const AppRouter = () => {
   return (
@@ -9,7 +11,14 @@ const AppRouter = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route
+            path="/favorites"
+            element={
+              <Suspense>
+                <FavoritesPage />
+              </Suspense>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
